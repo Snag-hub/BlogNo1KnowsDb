@@ -1,0 +1,24 @@
+﻿/****** Object:  Table [dbo].[Comments]    Committed by VersionSQL https://www.versionsql.com ******/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[Comments](
+	[CommentID] [int] IDENTITY(1,1) NOT NULL,
+	[PostID] [int] NOT NULL,
+	[Content] [nvarchar](max) NOT NULL,
+	[CreationDate] [datetime2](7) NOT NULL,
+	[BlogPostID] [int] NOT NULL,
+ CONSTRAINT [PK_Comments] PRIMARY KEY CLUSTERED 
+(
+	[CommentID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+CREATE NONCLUSTERED INDEX [IX_Comments_BlogPostID] ON [dbo].[Comments]
+(
+	[BlogPostID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+ALTER TABLE [dbo].[Comments]  WITH CHECK ADD  CONSTRAINT [FK_Comments_BlogPosts_BlogPostID] FOREIGN KEY([BlogPostID])
+REFERENCES [dbo].[BlogPosts] ([BlogPostID])
+ON DELETE CASCADE
+ALTER TABLE [dbo].[Comments] CHECK CONSTRAINT [FK_Comments_BlogPosts_BlogPostID]
